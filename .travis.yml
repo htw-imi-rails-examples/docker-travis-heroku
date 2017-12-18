@@ -11,5 +11,5 @@ script:
 after_success:
   #export HEROKU_TOKEN=$(heroku auth:token)
 - docker login -u _ -p "$HEROKU_TOKEN"  registry.heroku.com
-- docker build -t registry.heroku.com/imi-notes-docker/web -f Dockerfile.production .
-- docker push registry.heroku.com/imi-notes-docker/web
+- docker build -t registry.heroku.com/docker-travis-heroku/web -f Dockerfile.production .
+- docker push registry.heroku.com/docker-travis-heroku/web
