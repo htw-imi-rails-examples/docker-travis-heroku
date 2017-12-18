@@ -9,7 +9,9 @@ before_script:
 script:
 - docker-compose run --rm notes bundle exec rake spec
 after_success:
-  #export HEROKU_TOKEN=$(heroku auth:token)
+  # for local testing, needs to be set on travis, too:
+  # export HEROKU_TOKEN=$(heroku auth:token)
 - docker login -u _ -p "$HEROKU_TOKEN"  registry.heroku.com
 - docker build -t registry.heroku.com/docker-travis-heroku/web -f Dockerfile.production .
 - docker push registry.heroku.com/docker-travis-heroku/web
+- heroku run bundle exec rails db:migrate
