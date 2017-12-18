@@ -1,0 +1,15 @@
+language: generic
+sudo: required
+services:
+- docker
+before_script:
+- sudo /etc/init.d/postgresql stop
+- docker-compose build
+- docker-compose run notes bundle exec rails db:test:prepare
+script:
+- docker-compose run --rm notes bundle exec rake spec
+after_success:
+  #export HEROKU_TOKEN=$(heroku auth:token)
+- docker login -u _ -p "$HEROKU_TOKEN"  registry.heroku.com
+- docker build -t registry.heroku.com/imi-notes-docker/web -f Dockerfile.production .
+- docker push registry.heroku.com/imi-notes-docker/web

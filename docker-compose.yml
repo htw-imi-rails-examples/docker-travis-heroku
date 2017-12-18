@@ -1,0 +1,15 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    ports:
+      - 5432:5432
+  notes:
+    build: .
+    command: bundle exec puma -p 3000
+    volumes:
+      - .:/notes
+    ports:
+      - "3003:3000"
+    depends_on:
+      - db
