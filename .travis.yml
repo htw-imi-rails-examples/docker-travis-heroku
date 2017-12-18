@@ -14,4 +14,4 @@ after_success:
 - docker login -u _ -p "$HEROKU_TOKEN"  registry.heroku.com
 - docker build -t registry.heroku.com/docker-travis-heroku/web -f Dockerfile.production .
 - docker push registry.heroku.com/docker-travis-heroku/web
-- heroku run bundle exec rails db:migrate
+- heroku run --app docker-travis-heroku bundle exec rails db:migrate
